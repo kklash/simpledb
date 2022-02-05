@@ -27,9 +27,9 @@ func encodeUvarint(n uint64) []byte {
 // Encodes a uint64 as a big-endian byte slice.
 func encodeUint64(n uint64) []byte {
 	buf := make([]byte, 8)
-	for i := 0; i < 8; i++ {
-		byteShift := 64 - ((i + 1) * 8)
-		buf[i] = byte((n >> byteShift) & 0xff)
+	for i := 7; n > 0; i-- {
+		buf[i] = byte(n & 0xff)
+		n >>= 8
 	}
 	return buf
 }
