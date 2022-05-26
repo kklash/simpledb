@@ -27,10 +27,7 @@ func encodeUvarint(n uint64) []byte {
 // Encodes a uint64 as a big-endian byte slice.
 func encodeUint64(n uint64) []byte {
 	buf := make([]byte, 8)
-	for i := 7; n > 0; i-- {
-		buf[i] = byte(n & 0xff)
-		n >>= 8
-	}
+	binary.BigEndian.PutUint64(buf, n)
 	return buf
 }
 
@@ -40,11 +37,7 @@ func decodeUint64(r io.Reader) (n uint64, err error) {
 	if _, err = io.ReadFull(r, buf); err != nil {
 		return
 	}
-
-	for i := 0; i < 8; i++ {
-		byteShift := 64 - ((i + 1) * 8)
-		n |= uint64(buf[i]) << byteShift
-	}
+	n = binary.BigEndian.Uint64(buf)
 	return
 }
 
