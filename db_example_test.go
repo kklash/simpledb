@@ -2,8 +2,9 @@ package simpledb_test
 
 import (
 	"fmt"
-	"local/simpledb"
 	"os"
+
+	"github.com/kklash/simpledb"
 )
 
 func ExampleDB() {
